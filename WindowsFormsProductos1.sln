@@ -7,6 +7,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WindowsFormsProductos1", "W
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Entidades", "Entidades\Entidades.csproj", "{CAEC4500-4AF3-43E0-BEF2-996504615316}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CapaDeDatos", "CapaDatos\CapaDeDatos.csproj", "{30B1429D-483A-49C0-8087-F724979AFABD}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CapaDeNegocio", "CapaDeNegocio\CapaDeNegocio.csproj", "{017F45FE-AC6E-43E7-92B2-F4DE5E70B08F}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +25,14 @@ Global
 		{CAEC4500-4AF3-43E0-BEF2-996504615316}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CAEC4500-4AF3-43E0-BEF2-996504615316}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{CAEC4500-4AF3-43E0-BEF2-996504615316}.Release|Any CPU.Build.0 = Release|Any CPU
+		{30B1429D-483A-49C0-8087-F724979AFABD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{30B1429D-483A-49C0-8087-F724979AFABD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{30B1429D-483A-49C0-8087-F724979AFABD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{30B1429D-483A-49C0-8087-F724979AFABD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{017F45FE-AC6E-43E7-92B2-F4DE5E70B08F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{017F45FE-AC6E-43E7-92B2-F4DE5E70B08F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{017F45FE-AC6E-43E7-92B2-F4DE5E70B08F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{017F45FE-AC6E-43E7-92B2-F4DE5E70B08F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

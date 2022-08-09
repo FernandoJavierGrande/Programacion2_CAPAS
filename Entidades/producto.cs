@@ -9,7 +9,7 @@ namespace Entidades
     public class producto
     {
         #region atributos
-        private int codigo;
+        private string codigo;
         private string descripcion;
         private int stock;
         #endregion
@@ -17,7 +17,7 @@ namespace Entidades
 
         #region prop
 
-        public int Codigo { get => codigo; set => codigo = value; }
+        public string Codigo { get => codigo; set => codigo = value; }
         public string Descripcion { get => descripcion; set => descripcion = value; }
         public int Stock { get { return stock; } }
 
@@ -28,7 +28,7 @@ namespace Entidades
         {
         }
 
-        public producto(int codigo, string descripcion, int stock =0)
+        public producto(string codigo, string descripcion, int stock =0)
         {
             this.codigo = codigo;
             this.descripcion = descripcion;

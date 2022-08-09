@@ -8,56 +8,81 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using Entidades;
+using CapaDeNegocio;
+
 
 namespace WindowsFormsProductos1
 {
     public partial class FormProductos : Form
     {
-        Guardados gestionar = new Guardados();
+        Guardados gestionar = new Guardados();// a eliminar
+        NegProd prodNeg;
         producto nuevoProducto, prod_a_cargar;
+        
         public FormProductos()
         {
             InitializeComponent();
             dgv.AllowUserToAddRows = false;
 
 
-            dgv.DataSource = gestionar.DT;
-            dgv.ReadOnly = true;
+            
             dgv.Columns[0].Width = 70;
             dgv.Columns[1].Width = 120;
             dgv.Columns[2].Width = 50;
+            LlenarDgv();
+            dgv.ReadOnly = true;
         }
+        #region Metodos
+        private void LlenarDgv()
+        {
+            dgv.Rows.Clear();
+            DataSet ds = new DataSet();
+            prodNeg = new NegProd();
+            ds = prodNeg.Listado_N();
+            if (ds.Tables[0].Rows.Count>0)
+            {
+                foreach (DataRow dr in ds.Tables[0].Rows)
+                {
+                    dgv.Rows.Add(dr[0], dr[1], dr[2].ToString());
+                }
+            }
+            else
+                MessageBox.Show("La tabla está vacia");
+        }
+
+
+        #endregion
+
+
+
+
         #region botones
         private void button1_Click(object sender, EventArgs e)
         {
-            int stock = 0;
-            int cod;
+            if (txt_stock.Text.Trim().Equals(""))
+            {
+                txt_stock.Text = "0";
+            }
             
             try
             {
-                cod = int.Parse(txt_codigo.Text.Trim());
-                nuevoProducto = new producto(cod, txt_desc.Text.Trim());
+                
+                nuevoProducto = new producto(txt_codigo.Text.Trim(), txt_desc.Text.Trim(),int.Parse(txt_stock.Text.Trim()));
                 lbl_codMov.Text = nuevoProducto.Codigo.ToString();
                 lbl_descMov.Text = nuevoProducto.Descripcion.ToString();
-                if (txt_stock.Text!="")
-                {
-                    stock = int.Parse(txt_stock.Text.ToString().Trim());
-                }
-                
 
-                nuevoProducto.Ingreso(stock);
+                prodNeg = new NegProd();
+
+                prodNeg.AgregarProd_N(nuevoProducto);
+
+                LlenarDgv();
 
                 lbl_stockMov.Text = "Hay " + nuevoProducto.Stock.ToString() + " unidades ";
 
-                gestionar.agregar_Producto(nuevoProducto);
-                    
-                ////MessageBox.Show("Producto Instanciado");
-
-
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                MessageBox.Show("Ocurrió un error.\nIntente nuevamente","ERROR AL CARGAR", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                MessageBox.Show($"Ocurrió un error.\n{ex}\nIntente nuevamente", "ERROR AL CARGAR", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
             }
             
         }
@@ -102,7 +127,7 @@ namespace WindowsFormsProductos1
 
         #endregion
 
-        #region dgv
+        #region dgvclick
         private void dgv_CellClick(object sender, DataGridViewCellEventArgs e)
         {
             Guardados modificar = new Guardados();
@@ -113,7 +138,7 @@ namespace WindowsFormsProductos1
             aux_desc = dgv.CurrentRow.Cells[1].Value.ToString();
             aux_stock = dgv.CurrentRow.Cells[2].Value.ToString();
 
-            nuevoProducto = new producto(int.Parse(aux_cod), aux_desc);  //creo una nueva instancia de prod y stock inicial cero
+            nuevoProducto = new producto(aux_cod, aux_desc);  //creo una nueva instancia de prod y stock inicial cero
             nuevoProducto.Ingreso(int.Parse(aux_stock)); // ingreso el stock existente desde la tabla ya que no puedo hacer directo el set
 
             lbl_codMov.Text = aux_cod;

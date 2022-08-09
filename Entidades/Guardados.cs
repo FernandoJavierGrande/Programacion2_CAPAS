@@ -42,7 +42,7 @@ namespace Entidades
             {
                 for (int fila = 0; fila < DT.Rows.Count; fila++)
                 {
-                    if (Convert.ToInt32(DT.Rows[fila]["Codigo"]) == prod.Codigo)
+                    if (DT.Rows[fila]["Codigo"].Equals(prod.Codigo))
                     {
                         
                         DT.Rows[fila]["Stock"] = prod.Stock;
