@@ -15,8 +15,8 @@ namespace CapaDeNegocio
         public bool AgregarProd_N(producto producto)
             => Prod_Datos.AgregarProd_D(producto);
 
-        public bool ModificarProd_N(producto producto) 
-            => Prod_Datos.ModificarProd_D(producto);
+        public bool ModificarStock_N(string codigo, int cantidad) 
+            => Prod_Datos.ModificarStock_D(codigo,cantidad);
 
         public DataSet Listado_N(string codigo=null)
             => Prod_Datos.Listado_D(codigo);

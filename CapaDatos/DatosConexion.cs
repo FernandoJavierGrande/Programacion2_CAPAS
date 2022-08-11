@@ -25,10 +25,10 @@ namespace CapaDatos
             {
                 if (conexion.State == ConnectionState.Broken || conexion.State == ConnectionState.Closed) conexion.Open();
             }
-            catch (Exception)
+            catch (Exception e)
             {
 
-                throw new Exception("Error al abrir la conexion");
+                throw new Exception("Error al abrir la conexion" + e);
             }
             
         }

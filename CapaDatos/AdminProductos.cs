@@ -17,12 +17,15 @@ namespace CapaDatos
         #region crud
         public bool AgregarProd_D(producto producto)
         {
-            string query = $"INSERT INTO Productos VALUES {producto.Codigo},{producto.Descripcion},{producto.Stock}";
+            string query = $"INSERT INTO Productos VALUES ('{producto.Codigo}','{producto.Descripcion}',{producto.Stock})";
             int rows;
 
             try
             {
+                AbrirConn();
+                
                 cmd = new SqlCommand(query, conexion);
+                
                 rows = cmd.ExecuteNonQuery();
 
                 if (rows<1)
@@ -33,7 +36,7 @@ namespace CapaDatos
             }
             catch (Exception e)
             {
-
+                Console.WriteLine("try guardar adminprod " + e);
                 return false;
             }
             finally
@@ -42,14 +45,28 @@ namespace CapaDatos
                 cmd.Dispose();
             }
         }
-        public bool ModificarProd_D(producto producto)
+        public bool ModificarStock_D(string codigo, int cant)
         {
-            string query = $"UPDATE Productos SET Descripcion={producto.Descripcion} WHERE Codigo={producto.Codigo}";
+            
+
+            DataSet resp = Listado_D(codigo);
+            int auxCant;
+
+            if (resp == null)
+                return false;
+
+            auxCant = int.Parse(resp.Tables[0].Rows[0]["Stock"].ToString()) + (cant);
+
+
+            string query = $"UPDATE Productos SET Stock={auxCant} WHERE Codigo='{codigo}'";
             int rows;
             
             try
             {
+
+                AbrirConn();
                 cmd = new SqlCommand(query, conexion);
+
                 rows = cmd.ExecuteNonQuery();
 
                 if (rows < 1)
@@ -58,9 +75,8 @@ namespace CapaDatos
                 }
                 return true;
             }
-            catch (Exception e)
+            catch (Exception )
             {
-
                 return false;
             }
         }
@@ -70,14 +86,10 @@ namespace CapaDatos
             string query;
 
             if (codigo==null)
-            {
-                query = "SELECT * FROM Productos";
-
-            }
-            else
-            {
-                query = $"SELECT * FROM Poductos WHERE Codigo= {codigo} ";
-            }
+                query = "SELECT * FROM Productos";   
+            else 
+                query = $"SELECT * FROM Productos WHERE Codigo= '{codigo}' ";
+            
 
             SqlCommand cmd = new SqlCommand(query,conexion);
 
@@ -94,10 +106,10 @@ namespace CapaDatos
 
                 return dataset;
             }
-            catch (Exception)
+            catch (Exception )
             {
 
-                throw new Exception("No se pudo realizar la busqueda");
+                throw new Exception("No se pudo realizar la busqueda" );
             }
             finally
             {
@@ -107,26 +119,6 @@ namespace CapaDatos
             }
         }
 
-
-
-        //public bool validarCodigo(string codigo)
-        //{
-        //    string query = $"SELECT [Codigo] FROM Productos WHERE Codigo = {codigo}";
-
-        //    DataSet ds = new DataSet();
-        //    SqlDataReader da = new SqlDataAdapt();
-        //    try
-        //    {
-        //        AbrirConn();
-        //        cmd.ex
-        //    }
-        //    catch (Exception)
-        //    {
-
-        //        throw;
-        //    }
-
-        //}
         #endregion
     }
 }
